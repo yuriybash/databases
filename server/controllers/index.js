@@ -11,13 +11,16 @@ module.exports = {
     }, // a function which handles a get request for all messages
     post: function (req, res) {
       console.log('we are here, making a POST request');
+      // console.log(req);
       var requestBody = '';
       req.on('data', function(chunk) {
+        console.log(chunk.toString())
         requestBody+= chunk;
-      })
-      req.end(function() {
         db.addMessage(JSON.parse(requestBody));
-      })
+      });
+      // req.end(function()  {
+        // db.addMessage(JSON.parse(requestBody));
+      // })
 
 
 

@@ -10,7 +10,10 @@ exports.addMessage = function(messageContent) {
   //access each property
   //add properties to db
   //messageContent = {"message": "blahblahblah", "username": "obscyuriy", roomname:"homeroom"}
-
+  console.log('writing to db...')
+  console.log(messageContent);
+  console.log(messageContent['username']);
+  console.log(JSON.stringify(messageContent));
 
   var queryString = "INSERT INTO messages (text, username, roomname) values (:message, :username, :roomname)"
   exports.connection.query(queryString, messageContent);
