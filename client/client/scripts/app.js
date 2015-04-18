@@ -37,8 +37,11 @@ var app = {
       // data:{order:'-createdAt', limit:20, where:'{"roomname":"'+app.currentRoom+'"}'},
       success: function (data) {
         $("#chats").html('');
-        data = JSON.parse(data);
-        _.each(data.results, function(obj){
+        console.log('got messages');
+        console.log('before parse: '+JSON.stringify(data));
+        // data = JSON.parse(data);
+        console.log('after parse: '+data);
+        _.each(data, function(obj){
           app.addMessage(obj);
         });
       },
@@ -50,18 +53,19 @@ var app = {
   },
 
   addMessage: function(message){
-    if(message.text || message.username) {
-      if(/<script>/.test(message.text)){
+    if(message.message || message.username) {
+      console.log('message: '+message.message);
+      if(/<script>/.test(message.message)){
         message.text = "GTFO Hacker!!!"
       }
       if (message.username in app.friends){
         var $message = '<p><span class="username">'+message.username+
-                      '</span><span class="friend">: '+message.text+'</span></p>';
+                      '</span><span class="friend">: '+message.username+'</span></p>';
 
       }else{
 
         var $message = '<p><span class="username">'+message.username+
-                        '</span><span>: '+message.text+'</span></p>';
+                        '</span><span>: '+message.message+'</span></p>';
 
       }
       $('#chats').append($message);
@@ -137,7 +141,7 @@ $(document).ready(function(){
     event.preventDefault();
     var message = {
       'username': window.location.search.split('=')[1],
-      'text': $('#chatbox').val(),
+      'message': $('#chatbox').val(),
       'roomname': app.currentRoom
     };
     app.handleSubmit();

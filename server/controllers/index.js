@@ -19,7 +19,7 @@ module.exports = {
       });
     }, // a function which handles a get request for all messages
     post: function (req, res) {
-      // console.log("req.body for messages: " + JSON.stringify(req.body))
+       console.log("req.body for messages: " + JSON.stringify(req.body))
       db.add("messages", req.body)
       res.send(req.body);
 
