@@ -1,7 +1,7 @@
 var models = require('../models');
 var bluebird = require('bluebird');
-
-
+var db = require('../db/index.js'); //our database connection
+var mysql
 
 module.exports = {
   messages: {
