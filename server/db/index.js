@@ -15,8 +15,14 @@ exports.addMessage = function(messageContent) {
   console.log(messageContent['username']);
   console.log(JSON.stringify(messageContent));
 
-  var queryString = "INSERT INTO messages (text, username, roomname) values (:message, :username, :roomname)"
-  exports.connection.query(queryString, messageContent);
+  var message = messageContent.message.toString();
+  var username = messageContent.username;
+  var roomname = messageContent.roomname;
+  console.log("query looks like: " + "INSERT INTO messages (text, username, roomname) values (" + "'" + message + "'" + "," + "'" + username + "'" + "," + "'" + roomname + "'" + ")")
+
+  // var queryString = "INSERT INTO messages (text) values (:message)"
+  // exports.connection.query(queryString, {message: 'hello'});
+  exports.connection.query("INSERT INTO messages (text, username, roomname) values (" + "'" + message + "'" + "," + "'" + username + "'" + "," + "'" + roomname + "'" + ")")
 
 
 }

@@ -3,6 +3,7 @@ var bluebird = require('bluebird');
 var db = require('../db/index.js'); //our database connection
 
 console.log("CONTROLLER FILE HAS BEEN REACHED!!!!!!!")
+var headers = defaultCorsHeaders;
 
 module.exports = {
   messages: {
@@ -16,11 +17,13 @@ module.exports = {
       req.on('data', function(chunk) {
         console.log(chunk.toString())
         requestBody+= chunk;
-        db.addMessage(JSON.parse(requestBody));
       });
-      // req.end(function()  {
-        // db.addMessage(JSON.parse(requestBody));
-      // })
+       req.on('end', (function()  {
+        db.addMessage(JSON.parse(requestBody));
+        headers['Content-Type'] = "text/plain";
+        res.writeHead(200, headers);
+        res.end();
+       }))
 
 
 
@@ -36,3 +39,9 @@ module.exports = {
   }
 };
 
+var defaultCorsHeaders = exports.defaultCorsHeaders = {
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "access-control-allow-headers": "content-type, accept",
+  "access-control-max-age": 10 // Seconds.
+};
