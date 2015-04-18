@@ -6,20 +6,22 @@ exports.connection = mysql.createConnection({
       database: "chat"
     });
 
-exports.addMessage = function(table, messageContent) {
+exports.add = function(table, messageContent) {
 
   exports.connection.query("INSERT INTO " + table +" SET ?", messageContent, function(err, result){
     if(err) console.log("error", err);
-    console.log(result)
   })
 
 }
 
-exports.getAllMessages = function(table){
+exports.getAll = function(table, callback){
 
   exports.connection.query("SELECT * FROM " + table, function(err, result){
     if(err) console.log("error", err);
-    else console.log(result)
+    else {
+      console.log('result in db: '+JSON.stringify(result));
+      callback(result);
+    }
   })
 
 }

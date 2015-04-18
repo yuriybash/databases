@@ -80,6 +80,7 @@ describe("Persistent Node Chat Server", function() {
     // TODO - The exact query string and query args to use
     // here depend on the schema you design, so I'll leave
     // them up to you. */
+      dbConnection.query("INSERT INTO messages (message, username, roomname) VALUES ('Men like you can never change!', 'someone', 'main')");
 
     dbConnection.query(queryString, queryArgs, function(err) {
       if (err) { throw err; }
