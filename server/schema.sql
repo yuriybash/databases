@@ -4,7 +4,7 @@ USE chat;
 
 CREATE TABLE messages (
   message_id mediumint auto_increment,
-  text varchar(255),
+  message varchar(255),
   username varchar(30),
   user_id mediumint,
   roomname varchar(30),

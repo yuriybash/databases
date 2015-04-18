@@ -6,23 +6,46 @@ exports.connection = mysql.createConnection({
       database: "chat"
     });
 
-exports.addMessage = function(messageContent) {
+exports.addMessage = function(table, messageContent) {
   //access each property
   //add properties to db
   //messageContent = {"message": "blahblahblah", "username": "obscyuriy", roomname:"homeroom"}
   console.log('writing to db...')
-  console.log(messageContent);
-  console.log(messageContent['username']);
-  console.log(JSON.stringify(messageContent));
+  console.log("message that's being passed: " + JSON.stringify(messageContent));
 
-  var message = messageContent.message.toString();
-  var username = messageContent.username;
-  var roomname = messageContent.roomname;
-  console.log("query looks like: " + "INSERT INTO messages (text, username, roomname) values (" + "'" + message + "'" + "," + "'" + username + "'" + "," + "'" + roomname + "'" + ")")
+  // var message = messageContent.message;
+  // var username = messageContent.username;
+  // var roomname = messageContent.roomname;
 
   // var queryString = "INSERT INTO messages (text) values (:message)"
   // exports.connection.query(queryString, {message: 'hello'});
-  exports.connection.query("INSERT INTO messages (text, username, roomname) values (" + "'" + message + "'" + "," + "'" + username + "'" + "," + "'" + roomname + "'" + ")")
+  // exports.connection.query("INSERT INTO messages (text, username, roomname) values (" + "'" + message + "'" + "," + "'" + username + "'" + "," + "'" + roomname + "'" + ")")
+
+  exports.connection.query("INSERT INTO " + table +" SET ?", messageContent, function(err, result){
+    if(err) console.log("error", err);
+    console.log(result)
+  })
+
+
+
+}
+
+exports.addUser = function(user) {
+  //access each property
+  //add properties to db
+  //messageContent = {"message": "blahblahblah", "username": "obscyuriy", roomname:"homeroom"}
+  console.log('writing to db...')
+  console.log("USER IS: " + user);
+
+  var username = user.username;
+  console.log("query looks like: " + "INSERT INTO messages (username) values (" + "'" + username + "'" + ")")
+
+  // var queryString = "INSERT INTO messages (text) values (:message)"
+  // exports.connection.query(queryString, {message: 'hello'});
+  exports.connection.query("INSERT INTO messages (username) values (" + "'" + username + "'" + ")", function(err, result){
+    if (err) console.log("error", err);
+    console.log(result)
+  })
 
 
 }
